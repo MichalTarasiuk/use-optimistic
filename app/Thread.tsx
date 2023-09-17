@@ -8,6 +8,7 @@ interface Props {
 }
 
 export function Thread({ messages, addMessage }: Props) {
+  console.log(messages);
   const [optimisticMessages, addOptimisticMessage] = useOptimistic<
     Props["messages"],
     string

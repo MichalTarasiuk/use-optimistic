@@ -1,3 +1,6 @@
+"use client";
+
+import { useState } from "react";
 import { Thread } from "./Thread";
 import { revalidatePath } from "next/cache";
 
@@ -5,25 +8,23 @@ function delay(ms: number) {
   return new Promise((resolve) => setTimeout(resolve, ms));
 }
 
-const messages: string[] = [];
-
 let count = 0;
 
 export default function Home() {
+  const [messages, setMessages] = useState<string[]>([]);
+
   return (
     <main>
       <Thread
         messages={messages}
         addMessage={async (message) => {
-          "use server";
           await delay(3_000);
-          messages.push(message);
+          setMessages((messages) => Object.assign(messages, [message]));
         }}
       />
       <p>Current count: {count}</p>
       <form
         action={async () => {
-          "use server";
           count += 1;
           revalidatePath("/");
         }}
